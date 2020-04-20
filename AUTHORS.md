@@ -3,3 +3,4 @@
 
 # Contributors  (alpha by username)
 * jingpeicomp [@jingpeicomp](https://github.com/jingpeicomp)
+* nickfan [@nickfan](https://github.com/nickfan)

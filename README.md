@@ -9,11 +9,9 @@ Please use dubbo-rpc-jsonrpc and configure protocol in Dubbo for jsonrpc protoco
 Download code  
 python setup.py install  
 pip install  
-pip install dubbo-client==1.0.0b5
+pip install dubbo-python3>=1.0.1
 Git install  
-pip install git+[http://git.dev.qianmi.com/tda/dubbo-client-py.git@1.0.0b5](http://git.dev.qianmi.com/tda/dubbo-client-py.git@1.0.0b5)  
-or  
-pip install git+[https://github.com/qianmiopen/dubbo-client-py.git@1.0.0b5](https://github.com/qianmiopen/dubbo-client-py.git@1.0.0b5)
+pip install git+[https://github.com/nickfan/dubbo-python3.git@1.0.1](https://github.com/nickfan/dubbo-python3.git@1.0.1)
 
 ### Load balancing on the client side, service discovery
 
@@ -30,15 +28,14 @@ Support Version and Group settings.
 	    user_provider = DubboClient(service_interface, registry, version='1.0')
 	    for i in range(1000):
         try:
-            print user_provider.getUser('A003')
-            print user_provider.queryUser(
-                {u'age': 18, u'time': 1428463514153, u'sex': u'MAN', u'id': u'A003', u'name': u'zhangsan'})
-            print user_provider.queryAll()
-            print user_provider.isLimit('MAN', 'Joe')
-            print user_provider('getUser', 'A005')
-
-        except DubboClientError, client_error:
-            print client_error
+            print(user_provider.getUser('A003'))
+            print(user_provider.queryUser(
+                {u'age': 18, u'time': 1428463514153, u'sex': u'MAN', u'id': u'A003', u'name': u'zhangsan'}))
+            print(user_provider.queryAll())
+            print(user_provider.isLimit('MAN', 'Joe'))
+            print(user_provider('getUser', 'A005'))
+        except DubboClientError as client_error:
+            print(client_error)
         time.sleep(5)
 	
 ### TODO

@@ -34,23 +34,23 @@ THISDIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(THISDIR)
 
 VERSION = open("version.txt").readline().strip()
-HOMEPAGE = "https://github.com/ofpay/dubbo-client-py"
-DOWNLOAD_BASEURL = "https://github.com/ofpay/dubbo-client-py/raw/master/dist/"
-DOWNLOAD_URL = DOWNLOAD_BASEURL + "dubbo-client-%s-py2.7.egg" % VERSION
+HOMEPAGE = "https://github.com/nickfan/dubbo-python3"
+DOWNLOAD_BASEURL = "https://github.com/nickfan/dubbo-python3/raw/master/dist/"
+DOWNLOAD_URL = DOWNLOAD_BASEURL + "dubbo-python3-%s-py3.6.egg" % VERSION
 
 setup(
-    name="dubbo-client",
+    name="dubbo-python3",
     version=VERSION,
     description=(
-        "Python Dubbo Client"
+        "Python3 Dubbo Client"
     ),
     long_description=open("README.md").read(),
     keywords=(
         "Dubbo, JSON-RPC, JSON, RPC, Client,"
         "HTTP-Client, Remote Procedure Call, JavaScript Object Notation, "
     ),
-    author="Joe Cao",
-    author_email="chinalibra@gmail.com",
+    author="Nick Fan",
+    author_email="nickfan@gmail.com",
     url=HOMEPAGE,
     download_url=DOWNLOAD_URL,
     packages=find_packages(),
@@ -72,5 +72,5 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
     ],
-    install_requires=["kazoo>=2.0", "python-jsonrpc>=0.7.3"],
+    install_requires=["kazoo>=2.0.0", "jsonrpcclient>=3.3.0"],
 )

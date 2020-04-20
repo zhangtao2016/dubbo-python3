@@ -16,16 +16,16 @@
 """
 
 
-from rpclib import (
+from .rpclib import (
     DubboClient,
 )
-from rpcerror import *
+from .rpcerror import *
 
-from registry import (
+from .registry import (
     Registry,
     ZookeeperRegistry,
     MulticastRegistry
 )
-from config import (
+from .config import (
     ApplicationConfig,
 )

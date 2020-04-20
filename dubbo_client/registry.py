@@ -26,7 +26,7 @@ import socket
 import struct
 import threading
 import time
-import urllib
+import urllib.request, urllib.parse, urllib.error
 from threading import Thread
 
 from kazoo.client import KazooClient
@@ -117,7 +117,7 @@ class Registry(object):
         version = kwargs.get('version', '')
         key = self._to_key(interface, version, group)
         second_dict = self._service_providers.get(interface, {})
-        service_url_list = [service_url for service_url in second_dict.get(key, {}).itervalues() if
+        service_url_list = [service_url for service_url in second_dict.get(key, {}).values() if
                             not service_url.disabled and service_url.weight > 0]
         if not service_url_list:
             raise NoProvider('can not find provider', interface)
@@ -208,7 +208,7 @@ class Registry(object):
                     del self._service_providers[interface]
                     logger.debug("delete node {0}".format(interface))
                 for child_node in nodes:
-                    node = urllib.unquote(child_node).decode('utf8')
+                    node = urllib.parse.unquote(child_node).decode('utf8')
                     logger.debug('child of node is {0}'.format(node))
                     if node.startswith('jsonrpc'):
                         service_url = ServiceURL(node)
@@ -230,7 +230,7 @@ class Registry(object):
         try:
             configuration_dict = {}
             for _child_node in nodes:
-                _node = urllib.unquote(_child_node).decode('utf8')
+                _node = urllib.parse.unquote(_child_node).decode('utf8')
                 if _node.startswith('override'):
                     service_url = ServiceURL(_node)
                     key = self._to_key(interface, service_url.version, service_url.group)
@@ -243,8 +243,8 @@ class Registry(object):
 
             if interface in self._service_providers:
                 provider_dict = self._service_providers.get(interface)
-                for provider_key, second_dict in provider_dict.iteritems():
-                    for service_location, service_url in second_dict.iteritems():
+                for provider_key, second_dict in provider_dict.items():
+                    for service_location, service_url in second_dict.items():
                         configuration_service_urls = configuration_dict.get(provider_key, {}).get(service_location)
                         if not configuration_service_urls:
                             service_url.init_default_config()
@@ -281,7 +281,7 @@ class ZookeeperRegistry(Registry):
             self._connect_state = state
 
     def __unquote(self, origin_nodes):
-        return (urllib.unquote(child_node).decode('utf8') for child_node in origin_nodes if child_node)
+        return (urllib.parse.unquote(child_node).decode('utf8') for child_node in origin_nodes if child_node)
 
     def _do_event(self, event):
         # event.path 是类似/dubbo/com.ofpay.demo.api.UserProvider/providers 这样的
@@ -295,7 +295,7 @@ class ZookeeperRegistry(Registry):
             self._compare_swap_nodes(provide_name, self.__unquote(children))
             configurators_nodes = self._get_provider_configuration(provide_name)
             self._set_provider_configuration(provide_name, configurators_nodes)
-        print self._service_providers
+        print(self._service_providers)
 
     def _do_config_event(self, event):
         """
@@ -308,7 +308,7 @@ class ZookeeperRegistry(Registry):
         configurators_nodes = self._get_provider_configuration(provide_name)
         self._set_provider_configuration(provide_name, configurators_nodes)
 
-        print self._service_providers
+        print(self._service_providers)
 
     def register(self, interface, **kwargs):
         ip = self.__zk._connection._socket.getsockname()[0]
@@ -325,12 +325,12 @@ class ZookeeperRegistry(Registry):
             'pid': os.getpid(),
             'version': '1.0'
         }
-        url = 'consumer://{0}/{1}?{2}'.format(ip, interface, urllib.urlencode(params))
+        url = 'consumer://{0}/{1}?{2}'.format(ip, interface, urllib.parse.urlencode(params))
         # print urllib.quote(url, safe='')
 
         consumer_path = '{0}/{1}/{2}'.format('dubbo', interface, 'consumers')
         self.__zk.ensure_path(consumer_path)
-        self.__zk.create(consumer_path + '/' + urllib.quote(url, safe=''), ephemeral=True)
+        self.__zk.create(consumer_path + '/' + urllib.parse.quote(url, safe=''), ephemeral=True)
 
     def subscribe(self, interface, **kwargs):
         """
@@ -382,7 +382,7 @@ class MulticastRegistry(Registry):
         def run(self):
             while True:
                 event = self.sock.recv(10240)
-                print event
+                print(event)
                 self.callback(event.rstrip())
 
         def set_mssage(self, msg):
@@ -415,22 +415,22 @@ if __name__ == '__main__':
     parent_node = '{0}/{1}/{2}'.format('dubbo', 'com.ofpay.demo.api.UserProvider', '')
     nodes = zk.get_children(parent_node)
     for child_node in nodes:
-        node = urllib.unquote(child_node).decode('utf8')
-        print node
+        node = urllib.parse.unquote(child_node).decode('utf8')
+        print(node)
     configurators_node = '{0}/{1}/{2}'.format('dubbo', 'com.ofpay.demo.api.UserProvider', 'configurators')
     nodes = zk.get_children(configurators_node)
     for child_node in nodes:
-        node = urllib.unquote(child_node).decode('utf8')
-        print node
+        node = urllib.parse.unquote(child_node).decode('utf8')
+        print(node)
     providers_node = '{0}/{1}/{2}'.format('dubbo', 'com.ofpay.demo.api.UserProvider', 'providers')
     nodes = zk.get_children(providers_node)
     for child_node in nodes:
-        node = urllib.unquote(child_node).decode('utf8')
-        print node
+        node = urllib.parse.unquote(child_node).decode('utf8')
+        print(node)
     # zk.delete(parent_node+'/'+child_node, recursive=True)
     # registry = MulticastRegistry('224.5.6.7:1234')
     registry = ZookeeperRegistry('zookeeper:2181')
     registry.subscribe('com.ofpay.demo.api.UserProvider')
-    print registry.get_providers('com.ofpay.demo.api.UserProvider')
+    print(registry.get_providers('com.ofpay.demo.api.UserProvider'))
 
     time.sleep(500)

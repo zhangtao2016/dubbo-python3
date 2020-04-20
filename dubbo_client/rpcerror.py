@@ -41,7 +41,7 @@ class DubboClientError(RuntimeError):
         )
 
     def __unicode__(self):
-        return u"DubboClientError({code}): {message}".format(
+        return "DubboClientError({code}): {message}".format(
             code=self.code,
             message=self.message
         )
@@ -49,7 +49,7 @@ class DubboClientError(RuntimeError):
 
 class MethodNotFound(DubboClientError):
     code = -32601
-    message = u"The method does not exist / is not available."
+    message = "The method does not exist / is not available."
 
     def __init__(self, message=None, data=None):
         DubboClientError.__init__(self, message=message, data=data)
@@ -57,7 +57,7 @@ class MethodNotFound(DubboClientError):
 
 class ConnectionFail(DubboClientError):
     code = 504
-    message = u'connect failed {0}'
+    message = 'connect failed {0}'
 
     def __init__(self, message=None, data=None):
         message = self.message.format(data)
@@ -66,8 +66,8 @@ class ConnectionFail(DubboClientError):
 
 class NoProvider(DubboClientError):
     code = 5050
-    message = u'No provide name {0}'
-    provide_name = u''
+    message = 'No provide name {0}'
+    provide_name = ''
 
     def __init__(self, message=None, data=None):
         self.provide_name = data
@@ -76,7 +76,7 @@ class NoProvider(DubboClientError):
 
 class InvalidParams(DubboClientError):
     code = -32602
-    message = u"Invalid method parameter(s)."
+    message = "Invalid method parameter(s)."
 
     def __init__(self, message=None, data=None):
         DubboClientError.__init__(self, message=message, data=data)
@@ -84,7 +84,7 @@ class InvalidParams(DubboClientError):
 
 class InternalError(DubboClientError):
     code = -32603
-    message = u"Internal JSON-RPC error."
+    message = "Internal JSON-RPC error."
 
     def __init__(self, message=None, data=None):
         DubboClientError.__init__(self, message=message, data=data)
@@ -92,7 +92,7 @@ class InternalError(DubboClientError):
 
 class InvalidRequest(DubboClientError):
     code = -32600
-    message = u"The JSON sent is not a valid Request object."
+    message = "The JSON sent is not a valid Request object."
 
     def __init__(self, message=None, data=None):
         DubboClientError.__init__(self, message=message, data=data)
@@ -100,7 +100,7 @@ class InvalidRequest(DubboClientError):
 
 class UserDefinedError(DubboClientError):
     code = -32000
-    message = u'User defined error happend'
+    message = 'User defined error happend'
 
     def __init__(self, message=None, data=None):
         DubboClientError.__init__(self, message=message, data=data)

@@ -30,7 +30,7 @@ def test_client_every_new():
         user_provider = HttpClient(url="http://{0}{1}".format('172.19.3.111:38080/', 'com.ofpay.demo.api.UserProvider'))
         user_provider.getUser('A003')
         user_provider.queryUser(
-            {u'age': 18, u'time': 1428463514153, u'sex': u'MAN', u'id': u'A003', u'name': u'zhangsan'})
+            {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'})
         # user_provider.queryAll()
         user_provider.isLimit('MAN', 'Joe')
         user_provider('getUser', 'A005')
@@ -41,7 +41,7 @@ def test_client():
     for x in range(number):
         user_provider.getUser('A003')
         user_provider.queryUser(
-            {u'age': 18, u'time': 1428463514153, u'sex': u'MAN', u'id': u'A003', u'name': u'zhangsan'})
+            {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'})
         # user_provider.queryAll()
         user_provider.isLimit('MAN', 'Joe')
         user_provider('getUser', 'A005')
@@ -55,7 +55,7 @@ def test_dubbo():
     for x in range(number):
         user_provider.getUser('A003')
         user_provider.queryUser(
-            {u'age': 18, u'time': 1428463514153, u'sex': u'MAN', u'id': u'A003', u'name': u'zhangsan'})
+            {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'})
         # user_provider.queryAll()
         user_provider.isLimit('MAN', 'Joe')
         user_provider('getUser', 'A005')

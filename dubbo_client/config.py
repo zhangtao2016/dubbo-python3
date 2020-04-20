@@ -37,12 +37,12 @@ class ApplicationConfig(object):
     def __init__(self, name, **kwargs):
         self.name = name
         object_property = dir(ApplicationConfig)
-        for key, value in kwargs.items():
+        for key, value in list(kwargs.items()):
             if key in object_property:
                 setattr(self, key, value)
 
     def __str__(self):
-        return 'ApplicationConfig is {0}'.format(",".join(k + ':' + v for k, v in vars(self).iteritems()))
+        return 'ApplicationConfig is {0}'.format(",".join(k + ':' + v for k, v in vars(self).items()))
 
 
 class ReferenceConfig(object):
@@ -53,4 +53,4 @@ class ReferenceConfig(object):
 
 if __name__ == '__main__':
     application_config = ApplicationConfig('test_app', version='2.0.0', owner='caozupeng', error='ssd')
-    print application_config
+    print(application_config)
