@@ -16,7 +16,6 @@
 
 """
 
-
 from urllib.error import HTTPError
 
 from jsonrpcclient.clients.http_client import HTTPClient
@@ -24,7 +23,6 @@ from jsonrpcclient.exceptions import JsonRpcClientError, ReceivedNon2xxResponseE
 
 from dubbo_client.registry import Registry
 from dubbo_client.rpcerror import ConnectionFail, dubbo_client_errors, InternalError, DubboClientError
-
 
 
 class DubboClient(object):
@@ -54,28 +52,32 @@ class DubboClient(object):
         provider = self.registry.get_random_provider(self.interface, version=self.version, group=self.group)
         # print service_url.location
         url = "http://{0}{1}".format(provider.location, provider.path)
-
         client = HTTPClient(url)
         try:
-            response = client.request(method,*args, **kwargs)
+            response = client.request(method, *args, **kwargs)
+            if response.data.ok:
+                return response.data.result
+            else:
+                raise DubboClientError(message=response.text, data=response.data)
         except HTTPError as e:
             raise ConnectionFail(None, e.filename)
         except ReceivedNon2xxResponseError as error:
             if error.code in dubbo_client_errors:
                 message = str(error)
-                raise dubbo_client_errors[error.code](message=message, data=error.args,code=error.code)
+                raise dubbo_client_errors[error.code](message=message, data=error.args, code=error.code)
             else:
                 message = str(error)
-                raise DubboClientError(message=message, data=error.args,code=error.code)
+                raise DubboClientError(message=message, data=error.args, code=error.code)
         except ReceivedErrorResponseError as error:
             if error.response.code in dubbo_client_errors:
                 message = str(error.response.message)
-                raise dubbo_client_errors[error.response.code](message=message, data=error.response.data,code=error.response.code)
+                raise dubbo_client_errors[error.response.code](message=message, data=error.response.data,
+                                                               code=error.response.code)
             else:
                 message = str(error.response.message)
-                raise DubboClientError(message=message, data=error.args,code=error.code)
+                raise DubboClientError(message=message, data=error.args, code=error.code)
         except JsonRpcClientError as error:
-            raise DubboClientError( message=str(error), data=error.args)
+            raise DubboClientError(message=str(error), data=error.args)
         except Exception as ue:
             if hasattr(ue, 'message'):
                 if hasattr(ue, 'reason'):

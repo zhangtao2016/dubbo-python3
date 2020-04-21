@@ -103,7 +103,7 @@ class Registry(object):
         group = kwargs.get('group', '')
         version = kwargs.get('version', '')
         key = self._to_key(interface, version, group)
-        second = self._service_provides.get(interface, {})
+        second = self._service_providers.get(interface, {})
         return second.get(key, {})
 
     def get_random_provider(self, interface, **kwargs):
@@ -208,7 +208,7 @@ class Registry(object):
                     del self._service_providers[interface]
                     logger.debug("delete node {0}".format(interface))
                 for child_node in nodes:
-                    node = urllib.parse.unquote(child_node).decode('utf8')
+                    node = urllib.parse.unquote(child_node)
                     logger.debug('child of node is {0}'.format(node))
                     if node.startswith('jsonrpc'):
                         service_url = ServiceURL(node)
@@ -230,7 +230,7 @@ class Registry(object):
         try:
             configuration_dict = {}
             for _child_node in nodes:
-                _node = urllib.parse.unquote(_child_node).decode('utf8')
+                _node = urllib.parse.unquote(_child_node)
                 if _node.startswith('override'):
                     service_url = ServiceURL(_node)
                     key = self._to_key(interface, service_url.version, service_url.group)
@@ -281,7 +281,7 @@ class ZookeeperRegistry(Registry):
             self._connect_state = state
 
     def __unquote(self, origin_nodes):
-        return (urllib.parse.unquote(child_node).decode('utf8') for child_node in origin_nodes if child_node)
+        return (urllib.parse.unquote(child_node) for child_node in origin_nodes if child_node)
 
     def _do_event(self, event):
         # event.path 是类似/dubbo/com.ofpay.demo.api.UserProvider/providers 这样的
@@ -317,7 +317,7 @@ class ZookeeperRegistry(Registry):
             'application': self._app_config.name,
             'application.version': self._app_config.version,
             'category': 'consumer',
-            'dubbo': 'dubbo-client-py-1.0.0',
+            'dubbo': 'dubbo-client-py-1.0.1',
             'environment': self._app_config.environment,
             'method': '',
             'owner': self._app_config.owner,
@@ -415,17 +415,17 @@ if __name__ == '__main__':
     parent_node = '{0}/{1}/{2}'.format('dubbo', 'com.ofpay.demo.api.UserProvider', '')
     nodes = zk.get_children(parent_node)
     for child_node in nodes:
-        node = urllib.parse.unquote(child_node).decode('utf8')
+        node = urllib.parse.unquote(child_node)
         print(node)
     configurators_node = '{0}/{1}/{2}'.format('dubbo', 'com.ofpay.demo.api.UserProvider', 'configurators')
     nodes = zk.get_children(configurators_node)
     for child_node in nodes:
-        node = urllib.parse.unquote(child_node).decode('utf8')
+        node = urllib.parse.unquote(child_node)
         print(node)
     providers_node = '{0}/{1}/{2}'.format('dubbo', 'com.ofpay.demo.api.UserProvider', 'providers')
     nodes = zk.get_children(providers_node)
     for child_node in nodes:
-        node = urllib.parse.unquote(child_node).decode('utf8')
+        node = urllib.parse.unquote(child_node)
         print(node)
     # zk.delete(parent_node+'/'+child_node, recursive=True)
     # registry = MulticastRegistry('224.5.6.7:1234')

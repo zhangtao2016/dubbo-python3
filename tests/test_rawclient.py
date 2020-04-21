@@ -15,17 +15,14 @@
  limitations under the License.
 
 """
-from pyjsonrpc import HttpClient
+from jsonrpcclient.clients.http_client import HTTPClient
 
 
 def test_client_every_new():
-    user_provider = HttpClient(url="http://{0}{1}".format('zookeeper:38081/', 'com.ofpay.demo.api.UserProvider2'))
-    print(user_provider.getUser('A003'))
-    print(user_provider.queryUser(
-        {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'}))
-    print(user_provider.queryAll())
-    print(user_provider.isLimit('MAN', 'Joe'))
-    print(user_provider('getUser', 'A005'))
+    url = "http://{0}{1}".format('zookeeper:38081/', 'com.ofpay.demo.api.UserProvider2')
+    client = HTTPClient(url)
+    response = client.request('getUser', 'A003')
+    print(response)
 
 
 if __name__ == '__main__':

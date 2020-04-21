@@ -17,7 +17,7 @@
 """
 import pstats
 
-from pyjsonrpc import HttpClient
+from jsonrpcclient.clients.http_client import HTTPClient
 
 from dubbo_client import ZookeeperRegistry, DubboClient
 
@@ -27,24 +27,22 @@ number = 1000
 
 def test_client_every_new():
     for x in range(number):
-        user_provider = HttpClient(url="http://{0}{1}".format('172.19.3.111:38080/', 'com.ofpay.demo.api.UserProvider'))
-        user_provider.getUser('A003')
-        user_provider.queryUser(
-            {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'})
-        # user_provider.queryAll()
-        user_provider.isLimit('MAN', 'Joe')
-        user_provider('getUser', 'A005')
-
+        url="http://{0}{1}".format('172.19.3.111:38080/', 'com.ofpay.demo.api.UserProvider')
+        client = HTTPClient(url)
+        response = client.request('getUser', 'A003')
+        response2 = client.request('queryUser', {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'})
+        response3 = client.request('isLimit', 'MAN', 'Joe')
+        response4 = client.request('getUser', 'A005')
 
 def test_client():
-    user_provider = HttpClient(url="http://{0}{1}".format('172.19.3.111:38080/', 'com.ofpay.demo.api.UserProvider'))
+    url = "http://{0}{1}".format('172.19.3.111:38080/', 'com.ofpay.demo.api.UserProvider')
+    client = HTTPClient(url)
     for x in range(number):
-        user_provider.getUser('A003')
-        user_provider.queryUser(
-            {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'})
-        # user_provider.queryAll()
-        user_provider.isLimit('MAN', 'Joe')
-        user_provider('getUser', 'A005')
+        response = client.request('getUser', 'A003')
+        response2 = client.request('queryUser',
+                                   {'age': 18, 'time': 1428463514153, 'sex': 'MAN', 'id': 'A003', 'name': 'zhangsan'})
+        response3 = client.request('isLimit', 'MAN', 'Joe')
+        response4 = client.request('getUser', 'A005')
 
 
 def test_dubbo():
