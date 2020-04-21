@@ -2,4 +2,6 @@
 .idea
 *.log
 
+/build
+
 /dev.py
