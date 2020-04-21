@@ -1,4 +1,4 @@
-Metadata-Version: 1.1
+Metadata-Version: 2.1
 Name: dubbo-python3
 Version: 1.0.1
 Summary: Python3 Dubbo Client
@@ -71,3 +71,4 @@ Classifier: Topic :: System :: Networking
 Classifier: Topic :: Internet :: WWW/HTTP
 Classifier: Topic :: Internet :: WWW/HTTP :: HTTP Servers
 Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application
+Description-Content-Type: text/markdown
