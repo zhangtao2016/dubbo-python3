@@ -52,6 +52,7 @@ class DubboClient(object):
         provider = self.registry.get_random_provider(self.interface, version=self.version, group=self.group)
         # print service_url.location
         url = "http://{0}{1}".format(provider.location, provider.path)
+        # print(url)
         client = HTTPClient(url)
         try:
             response = client.request(method, *args, **kwargs)

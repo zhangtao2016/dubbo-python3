@@ -210,7 +210,7 @@ class Registry(object):
                 for child_node in nodes:
                     node = urllib.parse.unquote(child_node)
                     logger.debug('child of node is {0}'.format(node))
-                    if node.startswith('jsonrpc'):
+                    if node.startswith('jsonrpc') or node.startswith('http'):
                         service_url = ServiceURL(node)
                         self._add_node(interface, service_url)
             except Exception as e:
@@ -399,12 +399,12 @@ class MulticastRegistry(Registry):
     def _do_event(self, event):
         if event.startswith('register'):
             url = event[9:]
-            if url.startswith('jsonrpc'):
+            if url.startswith('jsonrpc') or url.startswith('http'):
                 service_provide = ServiceURL(url)
                 self._add_node(service_provide.interface, service_provide)
         if event.startswith('unregister'):
             url = event[11:]
-            if url.startswith('jsonrpc'):
+            if url.startswith('jsonrpc') or url.startswith('http'):
                 service_provide = ServiceURL(url)
                 self._remove_node(service_provide.interface, service_provide)
 
