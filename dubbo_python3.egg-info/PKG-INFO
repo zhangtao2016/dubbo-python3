@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: dubbo-python3
-Version: 1.0.1
+Version: 1.0.2
 Summary: Python3 Dubbo Client
 Home-page: https://github.com/nickfan/dubbo-python3
 Author: Nick Fan
 Author-email: nickfan@gmail.com
 License: UNKNOWN
-Download-URL: https://github.com/nickfan/dubbo-python3/raw/master/dist/dubbo-python3-1.0.1-py3.6.egg
+Download-URL: https://github.com/nickfan/dubbo-python3/raw/master/dist/dubbo-python3-1.0.2-py3.6.egg
 Description: Python Client For Apache Dubbo
         ------------------------------
         
@@ -25,8 +25,8 @@ Description: Python Client For Apache Dubbo
         | Download code
         | python setup.py install
         | pip install
-        | pip install dubbo-python3>=1.0.1 Git install
-        | pip install git+\ https://github.com/nickfan/dubbo-python3.git@1.0.1
+        | pip install dubbo-python3>=1.0.2 Git install
+        | pip install git+https://github.com/nickfan/dubbo-python3.git@1.0.2
         
         Load balancing on the client side, service discovery
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
