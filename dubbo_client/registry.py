@@ -295,7 +295,7 @@ class ZookeeperRegistry(Registry):
             self._compare_swap_nodes(provide_name, self.__unquote(children))
             configurators_nodes = self._get_provider_configuration(provide_name)
             self._set_provider_configuration(provide_name, configurators_nodes)
-        print(self._service_providers)
+        # print(self._service_providers)
 
     def _do_config_event(self, event):
         """
@@ -308,7 +308,7 @@ class ZookeeperRegistry(Registry):
         configurators_nodes = self._get_provider_configuration(provide_name)
         self._set_provider_configuration(provide_name, configurators_nodes)
 
-        print(self._service_providers)
+        # print(self._service_providers)
 
     def register(self, interface, **kwargs):
         ip = self.__zk._connection._socket.getsockname()[0]
@@ -382,7 +382,7 @@ class MulticastRegistry(Registry):
         def run(self):
             while True:
                 event = self.sock.recv(10240)
-                print(event)
+                # print(event)
                 self.callback(event.rstrip())
 
         def set_mssage(self, msg):

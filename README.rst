@@ -16,8 +16,8 @@ Installation
 | Download code
 | python setup.py install
 | pip install
-| pip install dubbo-python3>=1.0.2 Git install
-| pip install git+https://github.com/nickfan/dubbo-python3.git@1.0.2
+| pip install dubbo-python3>=1.0.3 Git install
+| pip install git+https://github.com/nickfan/dubbo-python3.git@1.0.3
 
 Load balancing on the client side, service discovery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
