@@ -30,6 +30,7 @@ Load balancing on the client side, service discovery
 | Support Version and Group settings.
 
 ### Example
+```python
 config = ApplicationConfig('test_rpclib') 
 service_interface ='com.ofpay.demo.api.UserProvider' #Contains a connection to zookeeper,which needs caching. 
 registry = ZookeeperRegistry('192.168.59.103:2181', config) 
@@ -43,7 +44,7 @@ for i in range(1000):
     print(user_provider('getUser', 'A005')) 
   except DubboClientError as client_error: 
     print(client_error) time.sleep(5)
-
+```
 TODO
 ~~~~
 
