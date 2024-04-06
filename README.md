@@ -43,7 +43,8 @@ for i in range(1000):
     print(user_provider.isLimit('MAN', 'Joe'))
     print(user_provider('getUser', 'A005')) 
   except DubboClientError as client_error: 
-    print(client_error) time.sleep(5)
+    print(client_error)
+  time.sleep(5)
 ```
 TODO
 ~~~~
